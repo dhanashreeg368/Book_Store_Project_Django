@@ -1,0 +1,28 @@
+version: '3.7'
+
+
+services:
+  web:
+    build: ..
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    environment:
+      - ENVIRONMENT=production
+      - SECRET_KEY=ip_@=tk@6%j_evdk%mc-(k9@x=9f!grghi)$$)&)@i%*_5+ob+
+      - STRIPE_TEST_PUBLISHABLE_KEY=<key>
+      - STRIPE_TEST_SECRET_KEY=<key>
+      - DEBUG=0
+    tty: true
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:11
+
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+
+

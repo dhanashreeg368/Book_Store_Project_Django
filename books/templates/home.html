@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block title %}
+ Home
+{%endblock title %}
+
+{% block content %}
+<h1>Homepage</h1>
+
+<form class="form-inline mt-2 mt-md-0" action="{% url 'search_results' %}"
+method="get">
+<input name="q" class="form-control mr-sm-2" type="text" placeholder="Search"
+aria-label="Search">
+</form>
+
+
+<img class="bookcover" src="{% static 'images/cover_image.jpg' %}">
+{% if user.is_authenticated %}
+ Hi {{ user.email }}!
+  <p><a href="{% url 'account_logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+ <!-- GitHub button starts here -->
+   <a href="{% provider_login_url 'github' %}" class="btn btn-secondary">
+      <i class="fa fa-github fa-fw"></i>
+      <span>Login with GitHub</span>
+    </a>
+
+  <a href="{%url 'account_login' %}">Log In</a>
+  <a href="{% url 'account_signup' %}">Sign Up</a>
+{% endif %}
+
+{% endblock content %}
